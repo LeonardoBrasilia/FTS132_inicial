@@ -32,7 +32,10 @@ def elevar_um_numero_pelo_outro(num1, num2):
 # Area = Pi * raio ** 2
 
 def calcular_area_do_circulo(raio):
-    return 3.14 * raio ** 2
+    try:
+        return 3.14 * raio ** 2
+    except TypeError:
+        return 'Falha no calculo - Raio não é um número'
 
 
 if __name__ == '__main__':
