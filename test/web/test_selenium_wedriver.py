@@ -21,7 +21,7 @@ class Test_Selenium_Webdriver():
         # Destruir o objeto do Selenium
         self.driver.quit()
 
-    # Definição do Teste
+    # Definição do Teste 1
     @pytest.mark.parametrize('termo, curso, preco', [
         ('mantis', 'Mantis', 'R$ 59,99'),
         ('ctfl', 'Preparatório CTFL', 'R$ 199,00'),
