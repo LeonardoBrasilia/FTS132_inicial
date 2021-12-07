@@ -1,12 +1,22 @@
 # 1 Importar Bibliotecas
+import os
+from datetime import datetime
+
 from selenium import webdriver
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 import pytest
 
+caminho_print = 'C:/Users/corre/PycharmProjects/fts132_inicial/prints/' \
+                + datetime.now().strftime('%Y-%m-%d %H-%M-%S') + '/'
+
 
 # 2 Classe
 class Test_Selenium_Webdriver():
+
+    def before_all(self):
+        # Criar a pasta com data e hora para guardar os prints
+        os.mkdir(caminho_print)
 
     # Definição de Início - Executa antes do teste
     def setup_method(self, method):
@@ -22,19 +32,22 @@ class Test_Selenium_Webdriver():
         self.driver.quit()
 
     # Definição do Teste
-    @pytest.mark.parametrize('termo, curso, preco', [
-        ('mantis', 'Mantis', 'R$ 59,99'),
-        ('ctfl', 'Preparatório CTFL', 'R$ 199,00'),
+    @pytest.mark.parametrize('id, termo, curso, preco', [
+        ('1', 'mantis', 'Mantis', 'R$ 59,99'),
+        ('2', 'ctfl', 'Preparatório CTFL', 'R$ 199,00'),
     ])
-    def testar_comprar_curso_mantis_com_click_na_lupa(self, termo, curso, preco):
+    def testar_comprar_curso_com_click_na_lupa(self, id, termo, curso, preco):
+
         # O Selenium abre a url indicada - site alvo do teste
         self.driver.get('https://www.iterasys.com.br')
+        self.driver.get_screenshot_as_file(f'{caminho_print}teste {id} - passo 1 - home.png')
         # O Selenium clica na caixa de pesquisa
         self.driver.find_element(By.ID, 'searchtext').click()
         # O Selenium apaga o conteúdo da caixa de pesquisa
         self.driver.find_element(By.ID, 'searchtext').clear()
         # O Selenium escreve 'mantis' na caixa de pesquisa
         self.driver.find_element(By.ID, 'searchtext').send_keys(termo)
+        self.driver.get_screenshot_as_file(f'{caminho_print}teste {id} - passo 2 - pesquisa pelo curso.png')
         # O Selenium clica no botão da lupa
         self.driver.find_element(By.ID, 'btn_form_search').click()
         # O Selenium clica em 'Matricule-se'
